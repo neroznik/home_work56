@@ -15,7 +15,8 @@ class ProductForm(forms.ModelForm):
 class CartAddForm(forms.ModelForm):
     class Meta:
         model = Cart
-        fields = ['qty']
+        # fields = []
+        fields = ['qty']  # бонус
 
 
 class OrderForm(forms.ModelForm):

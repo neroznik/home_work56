@@ -9,12 +9,14 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+# Бонус
 class OrderProductAdmin(admin.TabularInline):
     model = OrderProduct
     fields = ('product', 'qty')
     extra = 0
 
 
+# Бонус
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'phone', 'created_at')
     list_display_links = ('pk', 'name')

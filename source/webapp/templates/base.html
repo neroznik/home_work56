@@ -18,16 +18,35 @@
     <nav class="navbar">
         <div class="container">
             <ul class="menu">
-                <li><a href="{% url "index" %}">Home</a></li>
-                <li><a href="{% url "product_create" %}">Add Product</a></li>
-                <li><a href="{% url "cart_view" %}">Cart</a></li>
-                {% block menu %}{% endblock %}
+                <li><a href="{% url "webapp:index" %}">Home</a></li>
+                <li><a href="{% url "webapp:cart_view" %}">Cart</a></li>
+                {% if request.user.is_authenticated %}
+                    {% if perms.webapp.add_product %}
+                    <li><a href="{% url "webapp:product_create" %}">Add Product</a></li>
+                    {% endif %}
+
+                    {% block menu %}{% endblock %}
+                    <li><a href="{% url 'accounts:detail' request.user.pk %}">
+                        Привет, {{ request.user.get_full_name|default:request.user.username }}
+                    </a></li>
+                {% endif %}
+                {% block auth_menu %}
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Login</a></li>
+                        <li><a href="{% url 'accounts:create' %}?next={{ request.get_full_path }}">Sign Up</a></li>
+                    {% endif %}
+                {% endblock %}
+                {% if not request.user.is_authenticated %}
+                    <li><a href="{% url 'accounts:password_reset_email' %}">Reset Password</a></li>
+                {% endif %}
             </ul>
 
             {% block search %}
                 {% if search_form %}
                     <div class="search-form">
-                        <form action="{% url 'index' %}" method="GET">
+                        <form action="{% url 'webapp:index' %}" method="GET">
                             {{ search_form.search }}
                             <input type="submit" value="Найти">
                         </form>
@@ -37,6 +56,7 @@
         </div>
     </nav>
     <div class="container">
+        {% include 'partial/messages.html' %}
         {% block content %}{% endblock %}
     </div>
 

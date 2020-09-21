@@ -1,10 +1,10 @@
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView 
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
 
 from .base_views import SearchView
-
-from webapp.models import Product
-from webapp.forms import ProductForm
+from ..forms import ProductForm
+from ..models import Product
 
 
 class IndexView(SearchView):
@@ -23,26 +23,28 @@ class ProductView(DetailView):
     model = Product
     template_name = 'product/product_view.html'
 
-
-class ProductCreateView(CreateView):
+class ProductCreateView(PermissionRequiredMixin,CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'product/product_create.html'
+    permission_required = 'webapp.add_product'
 
     def get_success_url(self):
-        return reverse('product_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:product_view', kwargs={'pk': self.object.pk})
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(PermissionRequiredMixin,UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'product/product_update.html'
+    permission_required = 'webapp.change_product'
 
     def get_success_url(self):
-        return reverse('product_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:product_view', kwargs={'pk': self.object.pk})
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(PermissionRequiredMixin,DeleteView):
     model = Product
     template_name = 'product/product_delete.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('webapp:index')
+    permission_required = 'webapp.delete_product'
