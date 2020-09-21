@@ -85,7 +85,6 @@ class Order(models.Model):
 
     def format_time(self):
         return self.created_at.strftime('%Y-%m-%d %H:%M:%S')
-
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
