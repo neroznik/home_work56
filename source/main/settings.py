@@ -1,3 +1,4 @@
+
 """
 Django settings for main project.
 
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7hnddtimp98&!8est-b+)1o++h+$0i#@@)d$y9yv^=7*^8gxt^'
+SECRET_KEY = '6=kcd=#f*ay(x%(*%dhh#@qtpakcjq(5+u*5@z+9uujas&ja@h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'webapp'
+    'widget_tweaks',
+    'webapp',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'webapp.context_processors.search_form',
             ],
         },
     },

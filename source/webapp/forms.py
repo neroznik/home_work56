@@ -1,6 +1,5 @@
-from django.forms import forms
-
-from source.webapp.models import Product
+from django import forms
+from webapp.models import Product, Cart, Order
 
 
 class SimpleSearchForm(forms.Form):
@@ -11,3 +10,15 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = []
+
+
+class CartAddForm(forms.ModelForm):
+    class Meta:
+        model = Cart
+        fields = ['qty']
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        exclude = ['products']
