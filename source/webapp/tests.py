@@ -1,3 +1,6 @@
 from django.test import TestCase
 
-# Create your tests here.
+a = {'key': 1, 'key':3, 'name':5, 'key':8}
+
+
+for key, values in a.items():
