@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from webapp.models import Product, Order
+from webapp.models import Product, Order, OrderProduct
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,10 +20,18 @@ class ProductSerializer(serializers.ModelSerializer):
         exclude = []
 
 
+class OrdProSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderProduct
+        fields = '__all__'
+
+
+
 class OrderSerializer(serializers.ModelSerializer):
+    products = OrdProSerializer(many=True, read_only=True, source='product')
+
     class Meta:
         model = Order
-        fields = ['phone','address', 'products']
-        read_only_field = ['name']
+        exclude =[]
 
 
