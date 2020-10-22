@@ -90,6 +90,6 @@ class OrderViewSet(ViewSet):
             return Response(slr.errors, status=400)
 
     def retrieve(self, request, pk=None):
-        order = get_object_or_404(Product, pk=pk)
+        order = get_object_or_404(Order, pk=pk)
         slr = OrderSerializer(order, context={'request': request})
         return Response(slr.data)
