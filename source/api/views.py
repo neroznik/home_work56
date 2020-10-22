@@ -25,7 +25,7 @@ class ProductViewSet(ViewSet):
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
-            return [GETModelPermissions()]
+            return [DjangoModelPermissions()]
         else:
             return [AllowAny()]
 
@@ -68,11 +68,11 @@ class UserViewSet(ModelViewSet):
 
 class OrderViewSet(ViewSet):
     queryset = Order.objects.all()
-    permission_classes = [DjangoModelPermissions]
+
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve','create']:
-            return [GETModelPermissions()]
+            return [DjangoModelPermissions()]
         else:
             return [AllowAny()]
 
